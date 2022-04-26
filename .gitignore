@@ -4,3 +4,4 @@ playwright-report/
 .idea
 .cucumber-report.html
 .vscode
+.DS_Store
