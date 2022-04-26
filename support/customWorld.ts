@@ -12,11 +12,8 @@ export class CustomWorld {
     /**
      * Session variables
      * */
-    SELECTED_PRODUCT: string
 
-    /**
-     * Environment config
-     * */
+    SELECTED_PRODUCT: string
 }
 
 setWorldConstructor(CustomWorld)

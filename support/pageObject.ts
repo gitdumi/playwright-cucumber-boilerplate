@@ -5,10 +5,10 @@ export default class PageObject {
     page: Page
 
     constructor(page: Page) {
-        this.page =  page
+        this.page = page
     }
 
-    async navigate (path) {
+    async navigate(path) {
         await this.page.goto(path)
     }
 

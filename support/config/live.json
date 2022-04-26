@@ -1,5 +1,6 @@
 {
   "debug": false,
+  "screenshots": false,
   "baseURL": "https://www.saucedemo.com",
   "users": {
     "standard": {
