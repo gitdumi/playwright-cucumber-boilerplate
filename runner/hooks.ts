@@ -18,13 +18,13 @@ BeforeAll(async function () {
 })
 
 Before(async function (scenario) {
-    console.log('------| Starting scenario: ' + scenario.pickle?.name)
-    global.context = await global.browser.newContext()
-    global.page = await global.context.newPage()
+    console.log('------>| Starting scenario: ' + scenario.pickle?.name)
+    // global.context = await global.browser.newContext()
+    // global.page = await global.context.newPage()
 })
 
 After(async function (scenario) {
-    console.log('------| Ending scenario: ' + scenario.pickle?.name + ' === Status: ' + scenario.result?.status)
+    console.log('------>| Ending scenario: ' + scenario.pickle?.name + ' === Status: ' + scenario.result?.status)
     if (scenario.result?.status != Status.PASSED && global.env.screenshots? global.env.screenshots : false) {
         await global.page.screenshot({path: 'playwright-report/screenshots/' + Date.now().toString() + '.png'});
     }
