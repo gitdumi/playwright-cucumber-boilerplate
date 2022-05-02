@@ -5,9 +5,6 @@ const fs = require("fs-extra")
 const env = process.argv.slice(2)[0]
 const browser = process.argv.slice(3)[0]
 
-const env2 = process.env.environment
-const debug = process.env.debug
-
 
 const getOs = () => {
     const platform = process.platform

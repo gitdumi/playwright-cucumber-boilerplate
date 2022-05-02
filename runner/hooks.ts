@@ -1,5 +1,6 @@
 import {After, Before, BeforeAll, Status} from "@cucumber/cucumber";
 import {chromium, firefox, webkit} from "@playwright/test";
+import {BROWSERS} from "../support/constants";
 
 
 const qaConfig = require('../support/config/qa.json');
@@ -11,6 +12,10 @@ const debug = process.env.debug
 const headless = process.env.headless
 
 BeforeAll(async function () {
+    /**
+     * Config files are read from support/config and then
+     * assigned to the global variable of the test runner
+     */
     switch (env) {
         case 'qa':
             // @ts-ignore
@@ -29,9 +34,13 @@ BeforeAll(async function () {
     console.log('==| Running tests on environment: ' + env.toUpperCase() + ' and browser: ' + (browser != undefined ? browser : global.env.browser).toUpperCase())
     console.log('=====================================================================================\n')
 
+    /**
+     * The browser is instantiated according to the configuration
+     * settings found in support/config or by passing environment variables
+     */
     // @ts-ignore
     switch (browser != undefined ? browser : global.env.browser) {
-        case 'chrome':
+        case BROWSERS.CHROME:
             // @ts-ignore
             global.browser = await chromium.launch({
                 // @ts-ignore
@@ -43,7 +52,7 @@ BeforeAll(async function () {
                 }
             })
             break
-        case 'firefox':
+        case BROWSERS.FIREFOX:
             // @ts-ignore
             global.browser = await firefox.launch({
                 // @ts-ignore
@@ -55,7 +64,7 @@ BeforeAll(async function () {
                 }
             })
             break
-        case 'safari':
+        case BROWSERS.SAFARI:
             // @ts-ignore
             global.browser = await webkit.launch({
                 // @ts-ignore
@@ -71,8 +80,6 @@ BeforeAll(async function () {
             // @ts-ignore
             throw new Error(global.env.browser + ' browser not defined in runner/hooks.ts')
     }
-
-
 })
 
 Before(async function (scenario) {

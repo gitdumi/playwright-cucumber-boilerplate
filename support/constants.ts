@@ -1,0 +1,10 @@
+/**
+ * Store test constants here
+ */
+
+export const BROWSERS = {
+    CHROME: 'chrome',
+    FIREFOX: 'firefox',
+    EDGE: 'edge',
+    SAFARI: 'safari'
+}

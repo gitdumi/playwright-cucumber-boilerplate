@@ -9,7 +9,8 @@ export class CustomWorld {
     page: Page
 
     /**
-     * Session variables
+     * Session variables that can be used to pass values between different steps.
+     * You can see an example being used in a test with the 'SELECTED_PRODUCT' variable.
      * */
 
     SELECTED_PRODUCT: string
