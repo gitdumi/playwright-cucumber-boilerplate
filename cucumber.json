@@ -2,8 +2,9 @@
   "default": {
     "parallel": 1,
     "format": [
+      "summary",
       "progress-bar",
-      "html:cucumber-report.html"
+      "json:results/cucumber-report.json"
     ],
     "featurePaths": [
       "tests/features/**/*.feature"

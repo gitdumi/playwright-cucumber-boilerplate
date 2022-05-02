@@ -4,16 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm ./results/screenshots/*",
-    "test": "./node_modules/.bin/cucumber-js tests/features/**/*.feature"
+    "clean": "rm -r ./results; mkdir results",
+    "test:qa:chrome": "environment=qa browser=chrome headless=true ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts qa chrome",
+    "test:qa:firefox": "environment=qa browser=firefox ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts qa firefox",
+    "test:qa:safari": "environment=qa browser=safari ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts qa safari",
+    "test:qa:chrome:parallel": "environment=qa browser=chrome ./node_modules/.bin/cucumber-js tests/features/**/*.feature --parallel 5; node cucumber-report-generator.ts qa chrome",
+    "test:live:chrome": "environment=live browser=chrome ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts live chrome"
   },
   "keywords": [],
-  "author": "",
+  "author": "VD",
   "license": "ISC",
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0",
     "@playwright/test": "^1.21.1",
+    "multiple-cucumber-html-reporter": "^1.20.0",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "fs-extra": "^10.1.0"
   }
 }

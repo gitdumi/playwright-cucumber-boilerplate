@@ -1,5 +1,7 @@
 {
+  "headless": true,
   "debug": false,
+  "browser": "chrome",
   "screenshots": false,
   "baseURL": "https://www.saucedemo.com",
   "users": {

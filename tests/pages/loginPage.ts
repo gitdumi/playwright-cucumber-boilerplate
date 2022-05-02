@@ -6,12 +6,12 @@ export class LoginPage extends PageObject {
 
     private loginUsernameInputField = '#user-name'
     private loginPasswordInputField = '#password'
-    private loginButton = '#login-button'
+    private loginButton = this.page.locator('#login-button')
 
 
     async logIn(user: string, password: string) {
         await this.page.fill(this.loginUsernameInputField, user)
         await this.page.fill(this.loginPasswordInputField, password)
-        await this.page.locator(this.loginButton).click({force: true})
+        await this.loginButton.click({force: true})
     }
 }
