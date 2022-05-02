@@ -2,7 +2,6 @@ import PageObject from "../../support/pageObject";
 
 export class LoginPage extends PageObject {
 
-
     private loginUsernameInputField = this.page.locator('#user-name')
     private loginPasswordInputField = this.page.locator('#password')
     private loginButton = this.page.locator('#login-button')
