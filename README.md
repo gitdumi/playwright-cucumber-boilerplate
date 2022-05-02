@@ -6,7 +6,7 @@ Read more about [Playwright](https://playwright.dev/docs/intro)
 
 ## Setup
 
-1. Install npm and node.js
+1. Install npm and node.js <br>
 
 2. Install project dependencies using:
 ```
@@ -43,9 +43,9 @@ Example:
 
 In the ./tests directory you can find the test files:
 
-- features (.feature file definitions)
-        - steps (.ts files which implement logic from page objects or HTTP requests)
-            - pages (page objects storing locators and functions to interact with or make assertions on specific pages)
+- features (.feature file definitions) <br>
+        - steps (.ts files which implement logic from page objects or HTTP requests) <br>
+            - pages (page objects storing locators and functions to interact with or make assertions on specific pages) <br>
 
 The ./support directory contains the config files for each environment, test fixtures, constants, the page object class and the [customWorld implementation from Cucumber](https://github.com/cucumber/cucumber-js/blob/main/docs/support_files/world.md).
 
