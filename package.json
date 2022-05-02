@@ -8,7 +8,7 @@
     "test:qa:chrome": "environment=qa browser=chrome headless=false debug=false ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts qa chrome",
     "test:qa:firefox": "environment=qa browser=firefox ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts qa firefox",
     "test:qa:safari": "environment=qa browser=safari windowSize=393x851 ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts qa safari",
-    "test:qa:chrome:responsive": "environment=qa browser=chrome headless=false windowSize=393x851 ./node_modules/.bin/cucumber-js tests/features/**/*.feature --parallel 5; node cucumber-report-generator.ts qa chrome",
+    "test:qa:safari:responsive": "environment=qa browser=safari headless=false windowSize=393x851 ./node_modules/.bin/cucumber-js tests/features/**/*.feature --parallel 5; node cucumber-report-generator.ts qa safari",
     "test:qa:chrome:parallel": "environment=qa browser=chrome ./node_modules/.bin/cucumber-js tests/features/**/*.feature --parallel 5; node cucumber-report-generator.ts qa chrome",
     "test:live:chrome": "environment=live browser=chrome ./node_modules/.bin/cucumber-js tests/features/**/*.feature; node cucumber-report-generator.ts live chrome",
     "report:qa:chrome": "node cucumber-report-generator.ts qa chrome"

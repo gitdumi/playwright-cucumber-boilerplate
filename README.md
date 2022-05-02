@@ -69,9 +69,9 @@ $ npm run ${scriptName}
 ```
 $ npm run test:qa:chrome
 
-$ npm run test:qa:chrome:responsive
+$ npm run test:qa:chrome:parallel
 
-$ npm run test:qa:safari
+$ npm run test:qa:safari:responsive
 ```
 
 ### Examples using environment variables for config:
