@@ -3,7 +3,6 @@
     "parallel": 1,
     "format": [
       "summary",
-      "progress-bar",
       "json:results/cucumber-report.json"
     ],
     "featurePaths": [

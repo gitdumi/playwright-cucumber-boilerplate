@@ -6,10 +6,11 @@ import {BROWSERS} from "../support/constants";
 const qaConfig = require('../support/config/qa.json');
 const liveConfig = require('../support/config/live.json');
 
-const env = process.env.environment
-const browser = process.env.browser
-const debug = process.env.debug
-const headless = process.env.headless
+let env = process.env.environment
+let browser = process.env.browser
+let debug = process.env.debug
+let headless = process.env.headless
+let windowSize = process.env.windowSize
 
 BeforeAll(async function () {
     /**
@@ -26,40 +27,45 @@ BeforeAll(async function () {
             global.env = liveConfig
             break
         default:
-            throw new Error('Environment ' + env + ' undefined in runner/hooks.ts')
+            // @ts-ignore
+            env = 'qa'
+            // @ts-ignore
+            global.env = qaConfig
+            console.log('Default environment QA config loaded')
     }
+
+    readProperties()
 
     console.log('=====================================================================================')
     // @ts-ignore
-    console.log('==| Running tests on environment: ' + env.toUpperCase() + ' and browser: ' + (browser != undefined ? browser : global.env.browser).toUpperCase())
+    console.log(`==| Running tests on environment: ${env.toUpperCase()} and browser: ${browser.toUpperCase()} ${windowSize}`)
     console.log('=====================================================================================\n')
 
     /**
      * The browser is instantiated according to the configuration
      * settings found in support/config or by passing environment variables
      */
-    // @ts-ignore
-    switch (browser != undefined ? browser : global.env.browser) {
+    switch (browser) {
         case BROWSERS.CHROME:
-            // @ts-ignore
+            //@ts-ignore
             global.browser = await chromium.launch({
-                // @ts-ignore
-                headless: headless != undefined ? Boolean(headless) : global.env.headless,
+                //@ts-ignore
+                headless: headless,
                 logger: {
-                    // @ts-ignore
-                    isEnabled: (name, severity) => debug != undefined ? debug : global.env.debug,
+                    //@ts-ignore
+                    isEnabled: (name, severity) => debug,
                     log: (name, severity, message, args) => console.log(`${severity} ${name} ${message}`),
                 }
             })
             break
         case BROWSERS.FIREFOX:
-            // @ts-ignore
+            //@ts-ignore
             global.browser = await firefox.launch({
-                // @ts-ignore
-                headless: headless != undefined ? Boolean(headless) : global.env.headless,
+                //@ts-ignore
+                headless: headless,
                 logger: {
-                    // @ts-ignore
-                    isEnabled: (name, severity) => global.env.debug,
+                    //@ts-ignore
+                    isEnabled: (name, severity) => debug,
                     log: (name, severity, message, args) => console.log(`${severity} ${name} ${message}`),
                 }
             })
@@ -68,10 +74,10 @@ BeforeAll(async function () {
             // @ts-ignore
             global.browser = await webkit.launch({
                 // @ts-ignore
-                headless: headless != undefined ? Boolean(headless) : global.env.headless,
+                headless: headless,
                 logger: {
                     // @ts-ignore
-                    isEnabled: (name, severity) => global.env.debug,
+                    isEnabled: (name, severity) => debug,
                     log: (name, severity, message, args) => console.log(`${severity} ${name} ${message}`),
                 }
             })
@@ -83,16 +89,42 @@ BeforeAll(async function () {
 })
 
 Before(async function (scenario) {
-    console.log('------| Starting scenario: ' + scenario.pickle?.name)
+    console.log('\n------| Starting scenario: ' + scenario.pickle?.name)
     // @ts-ignore
-    global.context = await global.browser.newContext()
+    global.context = await global.browser.newContext({
+        viewport: {
+            // @ts-ignore
+            width: Number(windowSize.split('x')[0]),
+            // @ts-ignore
+            height: Number(windowSize.split('x')[1])
+        }
+    })
     global.page = await global.context.newPage()
 })
 
 After(async function (scenario) {
-    console.log('------| Ending scenario: ' + scenario.pickle?.name + ' === Status: ' + scenario.result?.status)
+    console.log('------| Ending scenario: ' + scenario.pickle?.name + ' === Status: ' + scenario.result?.status + '\n')
     // @ts-ignore
     if (scenario.result?.status != Status.PASSED && global.env.screenshots ? global.env.screenshots : false) {
         await global.page.screenshot({path: 'playwright-report/screenshots/' + Date.now().toString() + '.png'});
     }
 })
+
+function readProperties() {
+    /**
+     * Environment variable properties override support/config files.
+     * See package.json for script examples.
+     * If no environment variables are set,
+     * then the default settings will be support/config/qa.json
+     */
+    console.log(debug)
+    //@ts-ignore
+    browser = browser != undefined ? browser : global.env.browser
+    //@ts-ignore
+    windowSize = windowSize != undefined ? windowSize : global.env.windowSize
+    //@ts-ignore
+    headless = headless != undefined ? headless === 'true' : global.env.headless
+    //@ts-ignore
+    debug = debug != undefined ? debug === 'true' : global.env.debug
+    console.log(debug)
+}

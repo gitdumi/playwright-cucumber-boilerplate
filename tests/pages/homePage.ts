@@ -5,8 +5,8 @@ import {CustomWorld} from "../../support/customWorld";
 export class HomePage extends PageObject {
 
     private urlPattern = '/inventory.html$'
-    private pageTitle = '#header_container .title'
-    private productLinks = '.inventory_item_name'
+    private pageTitle = this.page.locator('#header_container .title')
+    private productLinks = this.page.locator('.inventory_item_name')
 
 
     async assertUrl() {
@@ -14,11 +14,11 @@ export class HomePage extends PageObject {
     }
 
     async waitForPageLoad() {
-        await expect(await this.page.locator(this.pageTitle).textContent()).toContain('Products')
+        await expect(await this.pageTitle.textContent()).toContain('Products')
     }
 
     private async getProductLinks() {
-        return this.page.locator(this.productLinks);
+        return this.productLinks;
     }
 
     async selectRandomProduct(world: CustomWorld) {

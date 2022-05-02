@@ -1,17 +1,16 @@
 import PageObject from "../../support/pageObject";
-import {expect, Locator} from "@playwright/test";
-import {CustomWorld} from "../../support/customWorld";
 
 export class LoginPage extends PageObject {
 
-    private loginUsernameInputField = '#user-name'
-    private loginPasswordInputField = '#password'
+
+    private loginUsernameInputField = this.page.locator('#user-name')
+    private loginPasswordInputField = this.page.locator('#password')
     private loginButton = this.page.locator('#login-button')
 
 
     async logIn(user: string, password: string) {
-        await this.page.fill(this.loginUsernameInputField, user)
-        await this.page.fill(this.loginPasswordInputField, password)
+        await this.loginUsernameInputField.fill(user)
+        await this.loginPasswordInputField.fill(password)
         await this.loginButton.click({force: true})
     }
 }
