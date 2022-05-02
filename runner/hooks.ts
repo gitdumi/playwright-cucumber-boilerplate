@@ -1,8 +1,8 @@
-import {After, Before, BeforeAll, Status} from "@cucumber/cucumber";
+import {After, AfterAll, Before, BeforeAll, Status} from "@cucumber/cucumber";
 import {chromium, firefox, webkit} from "@playwright/test";
 import {BROWSERS} from "../support/constants";
 
-
+const fs = require('fs-extra').promises
 const qaConfig = require('../support/config/qa.json');
 const liveConfig = require('../support/config/live.json');
 
@@ -11,6 +11,8 @@ let browser = process.env.browser
 let debug = process.env.debug
 let headless = process.env.headless
 let windowSize = process.env.windowSize
+
+let globalConfig
 
 BeforeAll(async function () {
     /**
@@ -33,8 +35,10 @@ BeforeAll(async function () {
             global.env = qaConfig
             console.log('Default environment QA config loaded')
     }
+    // @ts-ignore
+    global.env.envName = env
 
-    readProperties()
+    updateConfigFromEnvironmentVariables()
 
     console.log('=====================================================================================')
     // @ts-ignore
@@ -108,16 +112,17 @@ After(async function (scenario) {
     if (scenario.result?.status != Status.PASSED && global.env.screenshots ? global.env.screenshots : false) {
         await global.page.screenshot({path: 'playwright-report/screenshots/' + Date.now().toString() + '.png'});
     }
+    // @ts-ignore
+    globalConfig = global.env
 })
 
-function readProperties() {
+function updateConfigFromEnvironmentVariables() {
     /**
      * Environment variable properties override support/config files.
      * See package.json for script examples.
      * If no environment variables are set,
      * then the default settings will be support/config/qa.json
      */
-    console.log(debug)
     //@ts-ignore
     browser = browser != undefined ? browser : global.env.browser
     //@ts-ignore
@@ -126,5 +131,25 @@ function readProperties() {
     headless = headless != undefined ? headless === 'true' : global.env.headless
     //@ts-ignore
     debug = debug != undefined ? debug === 'true' : global.env.debug
-    console.log(debug)
+
+    global.env.browser = browser
+    global.env.headless = headless
+    global.env.windowSize = windowSize
+    global.env.debug = debug
 }
+
+AfterAll(async function () {
+    const runConfigExportPath = 'support/config/run-config.json'
+
+    /**
+     * The run-config.json file is saved for populating the Cucumber Multiple HTML Report
+     * with test config data. It is deleted after each test run.
+     */
+    try {
+        await fs.access(runConfigExportPath)
+    } catch (e) {
+        console.log('------| Writing run config file')
+        await fs.writeFile(runConfigExportPath, JSON.stringify(globalConfig))
+    }
+})
+

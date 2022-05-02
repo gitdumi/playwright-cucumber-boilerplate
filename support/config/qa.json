@@ -1,7 +1,8 @@
 {
+  "envName": "qa",
   "browser": "chrome",
   "windowSize": "1920x1080",
-  "headless": false,
+  "headless": true,
   "debug": false,
   "screenshots": false,
   "baseURL": "https://www.saucedemo.com",

@@ -1,4 +1,5 @@
 {
+  "envName": "live",
   "browser": "chrome",
   "windowSize": "1920x1080",
   "headless": true,

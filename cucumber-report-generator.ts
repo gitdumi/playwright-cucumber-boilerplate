@@ -1,49 +1,43 @@
 const report = require("multiple-cucumber-html-reporter");
 const fs = require("fs-extra")
-
-
-const env = process.argv.slice(2)[0]
-const browser = process.argv.slice(3)[0]
-
-
-const getOs = () => {
-    const platform = process.platform
-    switch (platform) {
-        case 'darwin':
-            return 'osx'
-        default:
-            return platform
-    }
-}
+const config = require('./support/config/run-config.json')
 
 const path = 'results/cucumber-report.json'
+let platform = process.platform === 'darwin' ? 'osx' : process.platform
 
+
+/**
+ * You can edit the data from the Cucumber Multi HTML Test report.
+ * More information: {@link https://github.com/wswebcreation/multiple-cucumber-html-reporter/blob/main/README.MD}
+ */
 fs.readFile(path, (err) => {
     if (err) {
         throw err;
     }
 
-    try {
-        report.generate({
-            jsonDir: "results",
-            reportPath: "results/cucumber-report-html",
-            metadata: {
-                browser: {
-                    name: `${browser}`,
-                    version: `${browser}`
-                },
-                device: 'Playwright',
-                platform: {
-                    name: getOs()
-                }
+    const body = {
+        jsonDir: "results",
+        reportPath: "results/cucumber-report-html",
+        metadata: {
+            browser: {
+                name: `${config.browser}`,
+                version: `${config.browser} ${config.windowSize}`
             },
-            customData: {
-                title: 'Run info',
-                data: [
-                    {label: 'Project', value: 'SauceLabs Web - ' + env.toString().toUpperCase()},
-                ]
+            device: 'Playwright',
+            platform: {
+                name: `${platform}`
             }
-        })
+        },
+        customData: {
+            title: 'Run info',
+            data: [
+                {label: 'Project', value: `SauceLabs Web - ${config.envName.toUpperCase()}`},
+            ]
+        }
+    }
+
+    try {
+        report.generate(body)
     } catch (error) {
         console.log(error)
         console.log('====================================================================================================')
@@ -51,3 +45,5 @@ fs.readFile(path, (err) => {
         console.log('====================================================================================================')
     }
 })
+
+
