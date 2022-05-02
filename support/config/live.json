@@ -3,7 +3,7 @@
   "windowSize": "1920x1080",
   "headless": true,
   "debug": false,
-  "screenshots": false,
+  "screenshots": true,
   "baseURL": "https://www.saucedemo.com",
   "users": {
     "standard": {
