@@ -2,7 +2,7 @@
 
 E2E Test Automation framework using Playwright, Typescript, Cucumber
 
-[Playwright documentation](https://playwright.dev/docs/intro)
+Read more about [Playwright](https://playwright.dev/docs/intro)
 
 ## Setup
 
@@ -41,11 +41,9 @@ Example:
 
 ### Structure:
 
-
 In the ./tests directory you can find the test files:
 
 - features (.feature file definitions)
-####    -TBD keywords (implementations of keywords from the feature files) - TBD
         - steps (.ts files which implement logic from page objects or HTTP requests)
             - pages (page objects storing locators and functions to interact with or make assertions on specific pages)
 
@@ -57,7 +55,9 @@ The cucumber-report-generator.ts file is the script that handles generating the 
 
 ## How to run
 
-Configured scripts are found in the package.json file
+Configured scripts are found in the package.json file and dictate how the tests are run.
+
+Playwright supports parallel test running, if enabled in ./cucumber.json 'parallel' property, or if passed as an argument in CLI.
 
 Scripts can be run using:
 ```
@@ -79,5 +79,7 @@ $ npm run test:qa:safari:responsive
 $ environment=qa browser=chrome headless=false windowSize=393x851 ./node_modules/.bin/cucumber-js tests/features/**/*.feature
 ```
 
-Reports are generated in ./results/cucumber-html-report, and screenshots for failed steps are saved in the ./results/screenshots folder.
+### Cucumber-multi-html-reporter
+
+Reports are run using scripts from ./package.json after each test execution. They are generated in ./results/cucumber-html-report, and screenshots for failed steps are saved in the ./results/screenshots folder.
 
