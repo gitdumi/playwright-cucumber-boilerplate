@@ -1,5 +1,5 @@
 import PageObject from "../../support/pageObject";
-import {expect, Locator} from "@playwright/test";
+import {expect} from "@playwright/test";
 import {CustomWorld} from "../../support/customWorld";
 
 export class HomePage extends PageObject {
