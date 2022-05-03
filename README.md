@@ -32,10 +32,6 @@ Example:
     "standard": {
       "username": "standard_user",
       "password": "secret_sauce"
-    },
-    "admin": {
-      "admin": "admin_user",
-      "password": "secret_sauce"
     }
   }
 }
