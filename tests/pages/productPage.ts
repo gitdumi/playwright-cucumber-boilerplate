@@ -17,7 +17,7 @@ export class ProductPage extends PageObject {
 
     async assertProductTitle(expectedTitle: string) {
         await expect(this.page.locator(this.productNameFromTitle), 'should be logged in').toBeVisible();
-        await expect(this.page.locator(`css=${this.productNameFromTitle} >> text=${expectedTitle}`)).toBeVisible()
+        await expect(await this.page.locator(this.productNameFromTitle).textContent(), 'product should contain title ' + expectedTitle).toBe(expectedTitle);
     }
 }
 

@@ -11,8 +11,8 @@
       "username": "standard_user",
       "password": "secret_sauce"
     },
-    "admin": {
-      "username": "admin_user",
+    "problem": {
+      "username": "problem_user",
       "password": "secret_sauce"
     }
   }

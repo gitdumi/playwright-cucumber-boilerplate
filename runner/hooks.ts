@@ -110,7 +110,7 @@ After(async function (scenario) {
     console.log('------| Ending scenario: ' + scenario.pickle?.name + ' === Status: ' + scenario.result?.status + '\n')
     // @ts-ignore
     if (scenario.result?.status != Status.PASSED && global.env.screenshots ? global.env.screenshots : false) {
-        await global.page.screenshot({path: 'playwright-report/screenshots/' + Date.now().toString() + '.png'});
+        await global.page.screenshot({path: 'results/screenshots/' + Date.now().toString() + '.png'});
     }
     // @ts-ignore
     globalConfig = global.env

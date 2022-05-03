@@ -8,3 +8,8 @@ export const BROWSERS = {
     EDGE: 'edge',
     SAFARI: 'safari'
 }
+
+export const USERS = {
+    STANDARD: 'standard',
+    PROBLEM: 'problem'
+}

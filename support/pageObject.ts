@@ -1,4 +1,4 @@
-import {Config, Locator, Page} from '@playwright/test'
+import {Page} from '@playwright/test'
 
 export default class PageObject {
 
@@ -8,13 +8,13 @@ export default class PageObject {
      *
      * Example:
      * this.page.click('#id')
-     * this.page.fill('#id', 'mystring')
+     * this.page.fill('#id', 'myString')
      */
 
     page: Page
 
-    constructor(page: Page) {
-        this.page = page
+    constructor() {
+        this.page = global.page
     }
 
     async navigate(path) {

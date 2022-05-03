@@ -2,17 +2,17 @@
   "envName": "qa",
   "browser": "chrome",
   "windowSize": "1920x1080",
-  "headless": true,
+  "headless": false,
   "debug": false,
-  "screenshots": false,
+  "screenshots": true,
   "baseURL": "https://www.saucedemo.com",
   "users": {
     "standard": {
       "username": "standard_user",
       "password": "secret_sauce"
     },
-    "admin": {
-      "username": "admin_user",
+    "problem": {
+      "username": "problem_user",
       "password": "secret_sauce"
     }
   }
