@@ -12,6 +12,7 @@ Read more about [Playwright](https://playwright.dev/docs/intro)
 
 ```
 $ npm install
+$ npx playwright install
 ```
 
 ## Configuration
